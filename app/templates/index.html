@@ -172,6 +172,8 @@
             </div>
         {% endif %}
     {% endfor %}
+</div>
+
 
 <!-- Formulário -->
 <form method="POST" action="/">
@@ -184,12 +186,14 @@
     💡 Dica: Tente perguntar algo como <em>"{{ sugestao }}"</em>
 </div>
 
-<!-- Script com scroll -->
+<!-- Script com scroll seguro -->
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    window.onload = () => {
         const chat = document.getElementById('chat');
-        chat.scrollTop = chat.scrollHeight;
-    });
+        if (chat) {
+            chat.scrollTop = chat.scrollHeight;
+        }
+    };
 </script>
 
 </body>
