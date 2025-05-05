@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, jsonify
 from utils.fetch_data import buscar_no_google  # Importa a função de busca
 import random
+from utils.intention import pergunta_sobre_furia  # Importando o filtro para perguntas sobre a FURIA
 
 main = Blueprint('main', __name__)
 historico = []
@@ -30,6 +31,8 @@ def index():
 
         if not pergunta:
             resposta['erro'] = "Digite uma pergunta."
+        elif not pergunta_sobre_furia(pergunta):  # Filtra perguntas fora do contexto
+            resposta['erro'] = "❌ Pergunta fora do contexto da FURIA. Tente algo relacionado ao time de CS da FURIA."
         else:
             # Chama a função de busca e pega o resumo e link
             resultado = buscar_no_google(pergunta)

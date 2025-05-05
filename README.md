@@ -8,7 +8,7 @@ Um chatbot web interativo que responde perguntas exclusivamente sobre o time de 
 
 ## 📸 Preview
 
-![Screenshot do Chatbot](docs/screenshot.png) <!-- opcional, se quiser capturar uma imagem do app em uso -->
+![Screenshot do Chatbot](utils/print_funcionando.png)
 
 ---
 
