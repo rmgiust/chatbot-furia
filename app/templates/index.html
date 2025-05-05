@@ -3,7 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <title>FURIA Chatbot</title>
-    <style>
+    <style> 
+        strong {
+        font-weight: bold;
+        }
         body {
             margin: 0;
             padding: 0;
@@ -160,7 +163,7 @@
             </div>
         {% elif entrada.resposta %}
             <div class="message bot">
-                {{ entrada.resposta }}
+                {{ entrada.resposta | safe }}
                 {% if entrada.link %}
                     <div style="margin-top: 8px;">
                         🌐 <a href="{{ entrada.link }}" target="_blank">Saiba mais</a>
@@ -169,7 +172,6 @@
             </div>
         {% endif %}
     {% endfor %}
-</div>
 
 <!-- Formulário -->
 <form method="POST" action="/">
@@ -182,13 +184,11 @@
     💡 Dica: Tente perguntar algo como <em>"{{ sugestao }}"</em>
 </div>
 
-<!-- Script com scroll seguro -->
+<!-- Script com scroll -->
 <script>
-    window.addEventListener("load", function () {
-        const chat = document.getElementById("chat");
-        if (chat) {
-            chat.scrollTop = chat.scrollHeight;
-        }
+    document.addEventListener("DOMContentLoaded", function () {
+        const chat = document.getElementById('chat');
+        chat.scrollTop = chat.scrollHeight;
     });
 </script>
 

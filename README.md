@@ -1,42 +1,65 @@
 # 🐆 Chatbot da FURIA (Flask)
 
-Este projeto é um chatbot web interativo que responde perguntas sobre o time de CS da FURIA usando Python + Flask + SerpAPI.
+Um chatbot web interativo que responde perguntas exclusivamente sobre o time de CS da FURIA, utilizando Flask + SerpAPI + RapidFuzz.
 
-> Criado como desafio técnico para a vaga de Estágio em Engenharia de Software na organização FURIA Esports.
+> Desafio técnico para a vaga de Estágio em Engenharia de Software na organização FURIA Esports.
+
+---
+
+## 📸 Preview
+
+![Screenshot do Chatbot](docs/screenshot.png) <!-- opcional, se quiser capturar uma imagem do app em uso -->
 
 ---
 
 ## 🔥 Funcionalidades
 
-- Interface web interativa (HTML + CSS)
-- Busca de informações via [SerpAPI](https://serpapi.com/)
-- Filtro inteligente de temas: responde **apenas** perguntas sobre o time de CS da FURIA
-- Reconhecimento de erros de digitação (fuzzy match com RapidFuzz)
-- Sugestão aleatória de pergunta a cada acesso
-- Respostas com links e resumos confiáveis
-- Resposta simulada com delay para imitar raciocínio do bot
-- Logo da FURIA no fundo + widget da HLTV na interface
-- Layout responsivo e estilizado
+✅ Responde perguntas **somente** sobre o time de CS da FURIA  
+✅ Busca respostas em tempo real via **SerpAPI**  
+✅ Interface web moderna (HTML + CSS)  
+✅ Filtro inteligente de temas usando **similaridade de texto (RapidFuzz)**  
+✅ Delay simulado de resposta para UX  
+✅ Sugestão dinâmica de perguntas  
+✅ Visual adaptado com branding da FURIA (logo, cores, links)
 
 ---
 
 ## 🧠 Tecnologias Utilizadas
 
-- Python 3.13.2+
+- Python 3.11+
 - Flask
-- HTML5 / CSS3
-- JavaScript
 - SerpAPI
 - RapidFuzz
+- HTML5 / CSS3
 - Render (deploy gratuito)
 
 ---
 
-## ⚙️ Como Rodar Localmente
+## 🚀 Como Rodar Localmente
 
 ```bash
+# Clone o projeto
 git clone https://github.com/rmgiust/chatbot-furia.git
 cd chatbot-furia
+
+# Crie e ative o ambiente virtual
 python -m venv venv
-venv\Scripts\activate  # (Windows)
+venv\Scripts\activate  # Windows
+# ou
+source venv/bin/activate  # Mac/Linux
+
+# Instale as dependências
 pip install -r requirements.txt
+
+# Crie um arquivo .env com sua chave SerpAPI
+echo SERPAPI_KEY=sua_chave_aqui > .env
+
+# Rode a aplicação
+python main.py
+
+
+---
+
+## 🙋 Autor
+
+Feito com 💻 e muita cafeína por **[Roni Giust](https://github.com/rmgiust)**
