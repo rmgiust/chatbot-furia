@@ -23,7 +23,7 @@
             overflow-y: auto;
             padding: 20px;
             display: flex;
-            flex-direction: column-reverse; /* Aqui é que ajustamos o fluxo do chat */
+            flex-direction: column;  /* Ajustamos para fluxo normal de mensagens */
             gap: 10px;
             background-image: url("{{ url_for('static', filename='furia_logo_black.png') }}");
             background-size: 200px;
@@ -150,23 +150,9 @@
 
 <!-- Chat -->
 <div class="chat-container" id="chat">
-    <!-- A mensagem de boas-vindas agora será renderizada logo antes do campo de entrada -->
-    <div class="message bot">
-        👋 Bem-vindo ao Oráculo Furioso! Estou aqui para responder tudo o que eu puder sobre nossa seleção brasileira de eSports: a <strong>FURIA</strong>! 🐆
-    </div>
-
+    <!-- Renderiza o histórico de mensagens -->
     {% for entrada in historico %}
-        {% if entrada.pergunta %}
-            <div class="message user">
-                {{ entrada.pergunta }}
-            </div>
-        {% endif %}
-
-        {% if entrada.erro %}
-            <div class="message bot">
-                {{ entrada.erro }}
-            </div>
-        {% elif entrada.resposta %}
+        {% if entrada.resposta %}
             <div class="message bot">
                 {{ entrada.resposta | safe }}
                 {% if entrada.link %}
@@ -176,10 +162,15 @@
                 {% endif %}
             </div>
         {% endif %}
+        {% if entrada.pergunta %}
+            <div class="message user">
+                {{ entrada.pergunta }}
+            </div>
+        {% endif %}
     {% endfor %}
 </div>
 
-<!-- Formulário -->
+<!-- Formulário para enviar perguntas -->
 <form method="POST" action="/">
     <input type="text" name="pergunta" placeholder="Manda bala! 💥🔫" autofocus required>
     <button type="submit">Enviar</button>
@@ -187,3 +178,16 @@
 
 <!-- Sugestão -->
 <div class="sugestoes">
+    💡 Dica: Tente perguntar algo como <em>"{{ sugestao }}"</em>
+</div>
+
+<!-- Script com scroll -->
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const chat = document.getElementById('chat');
+        chat.scrollTop = chat.scrollHeight;  // Garante que o scroll vá para a última mensagem
+    });
+</script>
+
+</body>
+</html>
