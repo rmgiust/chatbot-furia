@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>FURIA Chatbot</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background-color: #0f0f0f;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        .chat-container {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            background-image: url("{{ url_for('static', filename='furia_logo_black.png') }}");
+            background-size: 200px;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            background-blend-mode: soft-light;
+        }
+
+        .message {
+            max-width: 70%;
+            padding: 12px 16px;
+            border-radius: 15px;
+            word-wrap: break-word;
+            line-height: 1.5;
+        }
+
+        .user {
+            align-self: flex-end;
+            background-color: #9c27b0;
+            text-align: right;
+        }
+
+        .bot {
+            align-self: flex-start;
+            background-color: #222;
+        }
+
+        form {
+            display: flex;
+            padding: 12px;
+            background-color: #121212;
+            border-top: 1px solid #333;
+        }
+
+        input[type="text"] {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            background-color: #222;
+            color: #fff;
+        }
+
+        button {
+            padding: 12px 20px;
+            margin-left: 10px;
+            background-color: #9c27b0;
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+
+        a {
+            color: #03a9f4;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+        .top-bar {
+            background-color: #1a1a1a;
+            color: #fff;
+            padding: 10px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.95rem;
+            border-bottom: 1px solid #333;
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+
+        .top-bar .links a {
+            margin-left: 15px;
+            color: #9c27b0;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .top-bar .links a:hover {
+            text-decoration: underline;
+        }
+
+        .hltv-widget {
+            padding: 10px 20px;
+        }
+
+        .sugestoes {
+            text-align: center;
+            font-size: 0.9rem;
+            padding: 6px;
+            color: #ccc;
+        }
+    </style>
+</head>
+<body>
+
+<!-- Widget HLTV -->
+<div class="hltv-widget">
+  <iframe 
+    src="https://www.hltv.org/team/8297/furia" 
+    width="100%" 
+    height="400" 
+    frameborder="0" 
+    style="border-radius: 12px;">
+  </iframe>
+</div>
+
+<!-- Barra superior -->
+<div class="top-bar">
+    <span>🐆 Acompanhe as últimas da FURIA:</span>
+    <div class="links">
+        <a href="https://twitter.com/FURIA" target="_blank">🐦 Twitter</a>
+        <a href="https://instagram.com/furia" target="_blank">📸 Instagram</a>
+        <a href="https://www.hltv.org/team/8297/furia" target="_blank">💥 HLTV</a>
+    </div>
+</div>
+
+<!-- Chat -->
+<div class="chat-container" id="chat">
+    {% for entrada in historico %}
+        {% if entrada.pergunta %}
+            <div class="message user">
+                {{ entrada.pergunta }}
+            </div>
+        {% endif %}
+
+        {% if entrada.erro %}
+            <div class="message bot">
+                {{ entrada.erro }}
+            </div>
+        {% elif entrada.resposta %}
+            <div class="message bot">
+                {{ entrada.resposta }}
+                {% if entrada.link %}
+                    <div style="margin-top: 8px;">
+                        🌐 <a href="{{ entrada.link }}" target="_blank">Saiba mais</a>
+                    </div>
+                {% endif %}
+            </div>
+        {% endif %}
+    {% endfor %}
+</div>
+
+<!-- Formulário -->
+<form method="POST" action="/">
+    <input type="text" name="pergunta" placeholder="Manda bala! 💥🔫" autofocus required>
+    <button type="submit">Enviar</button>
+</form>
+
+<!-- Sugestão -->
+<div class="sugestoes">
+    💡 Dica: Tente perguntar algo como <em>"{{ sugestao }}"</em>
+</div>
+
+<!-- Script com scroll seguro -->
+<script>
+    window.addEventListener("load", function () {
+        const chat = document.getElementById("chat");
+        if (chat) {
+            chat.scrollTop = chat.scrollHeight;
+        }
+    });
+</script>
+
+</body>
+</html>
