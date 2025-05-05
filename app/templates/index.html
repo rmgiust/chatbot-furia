@@ -23,7 +23,7 @@
             overflow-y: auto;
             padding: 20px;
             display: flex;
-            flex-direction: column;
+            flex-direction: column-reverse; /* Aqui é que ajustamos o fluxo do chat */
             gap: 10px;
             background-image: url("{{ url_for('static', filename='furia_logo_black.png') }}");
             background-size: 200px;
@@ -150,6 +150,11 @@
 
 <!-- Chat -->
 <div class="chat-container" id="chat">
+    <!-- A mensagem de boas-vindas agora será renderizada logo antes do campo de entrada -->
+    <div class="message bot">
+        👋 Bem-vindo ao Oráculo Furioso! Estou aqui para responder tudo o que eu puder sobre nossa seleção brasileira de eSports: a <strong>FURIA</strong>! 🐆
+    </div>
+
     {% for entrada in historico %}
         {% if entrada.pergunta %}
             <div class="message user">
@@ -174,7 +179,6 @@
     {% endfor %}
 </div>
 
-
 <!-- Formulário -->
 <form method="POST" action="/">
     <input type="text" name="pergunta" placeholder="Manda bala! 💥🔫" autofocus required>
@@ -183,16 +187,3 @@
 
 <!-- Sugestão -->
 <div class="sugestoes">
-    💡 Dica: Tente perguntar algo como <em>"{{ sugestao }}"</em>
-</div>
-
-<!-- Script com scroll seguro -->
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
-        const chat = document.getElementById('chat');
-        chat.scrollTop = chat.scrollHeight;
-    });
-</script>
-
-</body>
-</html>
