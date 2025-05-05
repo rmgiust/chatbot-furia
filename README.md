@@ -11,11 +11,12 @@ Este projeto é um chatbot web interativo que responde perguntas sobre o time de
 - Interface web interativa (HTML + CSS)
 - Busca de informações via [SerpAPI](https://serpapi.com/)
 - Filtro inteligente de temas: responde **apenas** perguntas sobre o time de CS da FURIA
-- Sistema de sugestão de perguntas
+- Reconhecimento de erros de digitação (fuzzy match com RapidFuzz)
+- Sugestão aleatória de pergunta a cada acesso
 - Respostas com links e resumos confiáveis
-- Verificação de similaridade com `RapidFuzz`
-- Interface responsiva e visual personalizado
-- 🧠 Delay simulado para imitar raciocínio do bot
+- Resposta simulada com delay para imitar raciocínio do bot
+- Logo da FURIA no fundo + widget da HLTV na interface
+- Layout responsivo e estilizado
 
 ---
 
@@ -24,6 +25,7 @@ Este projeto é um chatbot web interativo que responde perguntas sobre o time de
 - Python 3.11+
 - Flask
 - HTML5 / CSS3
+- JavaScript
 - SerpAPI
 - RapidFuzz
 - Render (deploy gratuito)
@@ -33,8 +35,8 @@ Este projeto é um chatbot web interativo que responde perguntas sobre o time de
 ## ⚙️ Como Rodar Localmente
 
 ```bash
-git clone https://github.com/seu-usuario/chatbot-furia.git
+git clone https://github.com/rmgiust/chatbot-furia.git
 cd chatbot-furia
 python -m venv venv
-source venv/bin/activate  # ou .\venv\Scripts\activate no Windows
+venv\Scripts\activate  # (Windows)
 pip install -r requirements.txt
