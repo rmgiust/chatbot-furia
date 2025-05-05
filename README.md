@@ -10,6 +10,7 @@ Um chatbot web interativo que responde perguntas exclusivamente sobre o time de 
 
 ![Gif do Chatbot](utils/gif-funcional.gif)
 
+Se preferir, você pode acessar a aplicação diretamente no [Render](https://chatbot-furia-caoz.onrender.com).
 ---
 
 ## 🔥 Funcionalidades
