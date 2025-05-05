@@ -22,7 +22,7 @@ Este projeto é um chatbot web interativo que responde perguntas sobre o time de
 
 ## 🧠 Tecnologias Utilizadas
 
-- Python 3.11+
+- Python 3.13.2+
 - Flask
 - HTML5 / CSS3
 - JavaScript
