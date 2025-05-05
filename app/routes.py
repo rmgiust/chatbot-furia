@@ -1,6 +1,5 @@
-from flask import Blueprint, render_template, request
-from utils.fetch_data import buscar_no_google
-from utils.intention import pergunta_sobre_furia
+from flask import Blueprint, render_template, request, jsonify
+from utils.fetch_data import buscar_no_google  # Importa a função de busca
 import random
 
 main = Blueprint('main', __name__)
@@ -27,32 +26,20 @@ def index():
 
     elif request.method == 'POST':
         pergunta = request.form.get('pergunta')
+        resposta = {}
 
         if not pergunta:
-            historico.append({
-                "pergunta": "",
-                "erro": "Digite uma pergunta."
-            })
-
-        elif not pergunta_sobre_furia(pergunta):
-            historico.append({
-                "pergunta": pergunta,
-                "erro": "⚠️ Só respondo perguntas sobre o time de CS da FURIA 🐆."
-            })
-
+            resposta['erro'] = "Digite uma pergunta."
         else:
+            # Chama a função de busca e pega o resumo e link
             resultado = buscar_no_google(pergunta)
             if resultado:
-                historico.append({
-                    "pergunta": pergunta,
-                    "resposta": resultado['resumo'],
-                    "link": resultado['link']
-                })
+                resposta['resumo'] = resultado.get('resumo')
+                resposta['link'] = resultado.get('link')
             else:
-                historico.append({
-                    "pergunta": pergunta,
-                    "erro": "❌ Não encontrei nada sobre isso. Tente outra pergunta."
-                })
+                resposta['erro'] = "❌ Não encontrei nada sobre isso. Tente outra pergunta."
+
+        return jsonify(resposta)  # Retorna a resposta em JSON para o frontend
 
     sugestao = random.choice(sugestoes)
-    return render_template('index.html', historico=historico, sugestao=sugestao)
+    return render_template('index.html', historico=historico, sugestao=sugestoes)

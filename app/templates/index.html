@@ -5,7 +5,7 @@
     <title>FURIA Chatbot</title>
     <style> 
         strong {
-        font-weight: bold;
+            font-weight: bold;
         }
         body {
             margin: 0;
@@ -23,7 +23,7 @@
             overflow-y: auto;
             padding: 20px;
             display: flex;
-            flex-direction: column-reverse;  /* Ajustamos para fluxo normal de mensagens */
+            flex-direction: column;  /* Manter fluxo normal de mensagens */
             gap: 10px;
             background-image: url("{{ url_for('static', filename='furia_logo_black.png') }}");
             background-size: 200px;
@@ -34,11 +34,13 @@
         }
 
         .message {
-            max-width: 70%;
+            max-width: 100%;
             padding: 12px 16px;
             border-radius: 15px;
             word-wrap: break-word;
             line-height: 1.5;
+            white-space: normal;
+            word-break: break-word;
         }
 
         .user {
@@ -69,23 +71,33 @@
             color: #fff;
         }
 
-        button {
-            padding: 12px 20px;
-            margin-left: 10px;
+        /* Ajustando o botão de envio para ficar menor */
+        #send-button {
             background-color: #9c27b0;
             color: #fff;
             border: none;
-            border-radius: 8px;
+            border-radius: 50%;
+            padding: 10px;  /* Tamanho reduzido para encaixar melhor */
             cursor: pointer;
+            font-size: 1.2rem;
+            transition: background-color 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 45px;  /* Largura ajustada */
+            height: 45px;  /* Altura ajustada */
         }
 
-        a {
-            color: #03a9f4;
-            text-decoration: none;
+        #send-button:hover {
+            background-color: #8e24aa;
         }
 
-        a:hover {
-            text-decoration: underline;
+        #send-button:focus {
+            outline: none;
+        }
+
+        #send-button i {
+            pointer-events: none;  /* Impede interações no ícone */
         }
 
         .top-bar {
@@ -124,6 +136,7 @@
             color: #ccc;
         }
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
 
@@ -167,13 +180,20 @@
                 {{ entrada.pergunta }}
             </div>
         {% endif %}
+        {% if entrada.erro %}
+            <div class="message bot">
+                {{ entrada.erro }}
+            </div>
+        {% endif %}
     {% endfor %}
 </div>
 
 <!-- Formulário para enviar perguntas -->
 <form method="POST" action="/">
     <input type="text" name="pergunta" placeholder="Manda bala! 💥🔫" autofocus required>
-    <button type="submit">Enviar</button>
+    <button type="submit" id="send-button">
+        <i class="fas fa-crosshairs"></i>  <!-- Ícone de mira de CS2 -->
+    </button>
 </form>
 
 <!-- Sugestão -->
@@ -181,13 +201,73 @@
     💡 Dica: Tente perguntar algo como <em>"{{ sugestao }}"</em>
 </div>
 
-<!-- Script com scroll -->
+<!-- Script com scroll e delay nas respostas -->
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         const chat = document.getElementById('chat');
         chat.scrollTop = chat.scrollHeight;  // Garante que o scroll vá para a última mensagem
+
+        // Função para adicionar resposta com delay
+        function addResponseWithDelay(response, link) {
+            setTimeout(function() {
+                const loadingMessage = document.querySelector('.loading');
+                if (loadingMessage) {
+                    loadingMessage.remove();
+                }
+
+                const botMessage = document.createElement('div');
+                botMessage.classList.add('message', 'bot');
+                botMessage.innerHTML = response;
+
+                if (link) {
+                    const saibaMais = document.createElement('div');
+                    saibaMais.style.marginTop = '10px';
+                    saibaMais.innerHTML = `🌐 <a href="${link}" target="_blank">Saiba mais</a>`;
+                    botMessage.appendChild(saibaMais);
+                }
+
+                chat.appendChild(botMessage);
+                chat.scrollTop = chat.scrollHeight;  // Garante que o scroll vá para a última mensagem
+            }, 1000);
+        }
+
+        // Simulação do envio de resposta
+        document.querySelector('form').addEventListener('submit', function (e) {
+            e.preventDefault(); // Impede o envio imediato do formulário
+
+            const userMessage = document.querySelector('input[name="pergunta"]').value;
+            const userMessageElement = document.createElement('div');
+            userMessageElement.classList.add('message', 'user');
+            userMessageElement.textContent = userMessage;
+            chat.appendChild(userMessageElement);
+
+            document.querySelector('input[name="pergunta"]').value = ''; // Limpa o campo de input
+
+            // Adiciona a animação de "loading"
+            const loadingMessage = document.createElement('div');
+            loadingMessage.classList.add('message', 'bot', 'loading');
+            loadingMessage.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processando...';
+            chat.appendChild(loadingMessage);
+            chat.scrollTop = chat.scrollHeight;
+
+            // Envia a pergunta para o servidor (backend) para processar a resposta
+            fetch('/', {
+                method: 'POST',
+                body: new URLSearchParams({
+                    'pergunta': userMessage
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.resumo) {
+                    addResponseWithDelay(data.resumo, data.link);
+                } else if (data.erro) {
+                    addResponseWithDelay(data.erro);
+                }
+            })
+            .catch(error => console.error('Erro ao enviar a pergunta:', error));
+        });
     });
 </script>
-
 </body>
 </html>
