@@ -1,7 +1,7 @@
 from rapidfuzz import fuzz
 
 PALAVRAS_CHAVE = [
-    "furia", "cs", "cs2", "csgo", "counter strike", "jogadores", "coach", "treinador", "técnico",
+    "furia","fúria", "cs", "cs2", "csgo", "counter strike", "jogadores", "coach", "treinador", "técnico",
     "hltv", "ranking", "torneio", "campeonato", "partida", "lineup", "elenco", "equipe",
     "esports", "história", "títulos", "conquistas",
     "fallen", "gabriel toledo", "kscerato", "kaike cerato", "yuurih", "yuri boian", "chelo", "marcelo cespedes",

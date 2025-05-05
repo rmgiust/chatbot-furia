@@ -20,10 +20,10 @@ def index():
     global historico
 
     if request.method == 'GET':
-        if not historico:
-            historico.append({
-                "resposta": "👋 Bem-vindo ao Oráculo Furioso! Estou aqui para responder tudo o que eu puder sobre nossa seleção brasileira de eSports: a <strong>FURIA</strong>! 🐆"
-            })
+        historico.clear()  # Limpa tudo ao acessar a página
+        historico.append({
+            "resposta": "👋 Bem-vindo ao Oráculo Furioso! Estou aqui para responder tudo o que eu puder sobre nossa seleção brasileira de eSports: a <strong>FURIA</strong>! 🐆"
+        })
 
     elif request.method == 'POST':
         pergunta = request.form.get('pergunta')
