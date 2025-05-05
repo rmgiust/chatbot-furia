@@ -188,12 +188,10 @@
 
 <!-- Script com scroll seguro -->
 <script>
-    window.onload = () => {
+    document.addEventListener("DOMContentLoaded", function () {
         const chat = document.getElementById('chat');
-        if (chat) {
-            chat.scrollTop = chat.scrollHeight;
-        }
-    };
+        chat.scrollTop = chat.scrollHeight;
+    });
 </script>
 
 </body>
