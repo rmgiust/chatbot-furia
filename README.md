@@ -26,7 +26,7 @@ Um chatbot web interativo que responde perguntas exclusivamente sobre o time de 
 
 ## 🧠 Tecnologias Utilizadas
 
-- Python 3.11+
+- Python 3.13.2
 - Flask
 - SerpAPI
 - RapidFuzz
