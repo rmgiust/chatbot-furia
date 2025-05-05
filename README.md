@@ -8,7 +8,7 @@ Um chatbot web interativo que responde perguntas exclusivamente sobre o time de 
 
 ## 📸 Preview
 
-![Gif do Chatbot](utils/gif_funcionando.mp4)
+![Gif do Chatbot](utils/gif-funcional.gif)
 
 ---
 
